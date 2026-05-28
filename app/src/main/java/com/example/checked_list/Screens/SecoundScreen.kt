@@ -11,13 +11,23 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonDefaults.buttonColors
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults.colors
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,6 +38,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -47,7 +60,12 @@ fun SecoundScreen(navController: NavHostController) {
         modifier = Modifier
             .background(Color(0xFFF3978F6)),
     ){
-        Button(onClick = { navController.navigate("Home") },
+        Button(onClick = { navController.navigate("Home")
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF2D6498),
+                contentColor = Color.White
+            ),
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
@@ -56,11 +74,16 @@ fun SecoundScreen(navController: NavHostController) {
             Text(
                 text = "Voltar ",
                 textAlign = TextAlign.Center,
+                style = TextStyle (
+                    fontFamily = FontFamily.Serif,
+                    fontWeight = FontWeight.Bold,
+                ),
+                fontSize = 15.sp,
                 modifier = Modifier
                     .fillMaxWidth(0.3f)
                     .height(20.dp)
                     .width(10.dp)
-                    .padding( bottom = 5.dp)
+                    .padding( bottom = 4.dp)
             )
         }
 
@@ -84,7 +107,7 @@ fun SecoundScreen(navController: NavHostController) {
                 OutlinedTextField(
                     value = textInput,
                     onValueChange = { newText -> textInput = newText },
-                    label = { Text("Criar nova", color = Color.White,) },
+                    label = { Text("Digite uma nova tarefa", color = Color.White,) },
                     modifier = Modifier
                         .fillMaxWidth() // ocupa toda largura
                         .height(110.dp)  // altura maior
@@ -116,17 +139,50 @@ fun SecoundScreen(navController: NavHostController) {
                                 lisTask.add(TaskCheck(name =  textInput))
                                 textInput = ""
                             }
-                        }
-                    )
-                    {
-                        Text("Adicionar uma tarefa")
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF2D6498),
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text (
+                        text = "Adicionar ",
+                        textAlign = TextAlign.Center,
+                        style = TextStyle (
+                            fontFamily = FontFamily.Serif,
+                            fontWeight = FontWeight.Bold,
+                        ),
+                        fontSize = 12.sp,
+                        modifier = Modifier
+                            .fillMaxWidth(0.3f)
+                            .height(20.dp)
+                            .width(10.dp)
+                            .padding( bottom = 5.dp)
+                        )
                     }
                     Button(
                         onClick = {
                             lisTask.clear()
-                        }
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF2D6498),
+                            contentColor = Color.White
+                        ),
                     ) {
-                        Text("Limpar Tarefas")
+                        Text (
+                            text = "Limpar ",
+                            textAlign = TextAlign.Center,
+                            style = TextStyle (
+                                fontFamily = FontFamily.Serif,
+                                fontWeight = FontWeight.Bold,
+                            ),
+                            fontSize = 12.sp,
+                            modifier = Modifier
+                                .fillMaxWidth(0.3f)
+                                .height(20.dp)
+                                .width(10.dp)
+                                .padding( bottom = 5.dp)
+                        )
                     }
                 }
             }
@@ -139,6 +195,15 @@ fun SecoundScreen(navController: NavHostController) {
                 modifier = Modifier
                     .height(24.dp)
             )
+            Box(
+                modifier = Modifier
+                    .background(Color(0xFFF2D6498))
+                    .size(400.dp)
+            )
+            {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
             lisTask.forEachIndexed  { index, task ->
 
                 Row(
@@ -177,9 +242,25 @@ fun SecoundScreen(navController: NavHostController) {
                             modifier = Modifier.padding(vertical = 4.dp)
                         )
                     }
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    IconButton(
+                        onClick = {
+                            lisTask.removeAt(index)
+                        }
+                    ) {
+
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Excluir tarefa",
+                            tint = Color.Red
+                        )
+                    }
                 }
+                }
+            }
+            }
             }
         }
     }
-}
 
