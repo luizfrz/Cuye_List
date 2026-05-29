@@ -26,11 +26,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.checked_list.R
-
 
 @Composable
 fun PrimaryScreen(navController: NavHostController) {
@@ -40,26 +40,29 @@ fun PrimaryScreen(navController: NavHostController) {
     ){
         Image(
             painter = painterResource(id = R.drawable.cuyes),
-            contentDescription = "image app",
+            contentDescription = "cuye (porquinho) icon",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
                 .width(90.dp)
                 .padding(16.dp)
         )
+
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
+
             Button(
                 onClick = {
-                   navController.navigate("New Task")
+                   navController.navigate("NewTask")
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF2D6498),
                     contentColor = Color.White
                 )
-            ) {
+            )
+            {
                 Text(
                     text = "Criar lista de tarefas",
                     style = TextStyle (
@@ -72,10 +75,11 @@ fun PrimaryScreen(navController: NavHostController) {
                         .fillMaxWidth()
                         .height(60.dp)
                         .width(60.dp)
-                        .padding(16.dp)
+                        .padding(16.dp),
                     )
             }
         }
+
         Text(
             text = "Cuye list seu app de anotações ",
             textAlign = TextAlign.Center,

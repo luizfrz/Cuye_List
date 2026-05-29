@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                     composable("home"){
                         PrimaryScreen(navController)
                     }
-                    composable("New Task"){
+                    composable("NewTask"){
                         SecoundScreen(navController)
                     }
                 }
@@ -68,6 +68,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-
-
