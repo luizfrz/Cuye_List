@@ -32,7 +32,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -57,7 +56,7 @@ import androidx.navigation.NavHostController
 data class TaskCheck(
     val Listname: String,
     val Checkedlist: Boolean = false,
-    val isDone: Boolean = false
+        val isDone: Boolean = false
 )
 
 @Composable
@@ -101,10 +100,10 @@ fun SecoundScreen(navController: NavHostController) {
         )
         {
 
-            var textInput by remember { mutableStateOf("") }
-            val lisTask = remember {
-                mutableStateListOf<TaskCheck>()
-            }
+                var textInput by remember { mutableStateOf("") }
+                val addTask = remember {
+                    mutableStateListOf<TaskCheck>()
+                }
 
             Column(
                 modifier = Modifier
@@ -144,7 +143,7 @@ fun SecoundScreen(navController: NavHostController) {
                     Button(
                         onClick = {
                             if (textInput.isNotBlank()) {
-                                lisTask.add(TaskCheck(Listname = textInput))
+                                addTask.add(TaskCheck(Listname = textInput))
                                 textInput = ""
                             }
                         },
@@ -170,7 +169,7 @@ fun SecoundScreen(navController: NavHostController) {
                     }
                     Button(
                         onClick = {
-                            lisTask.clear()
+                            addTask.clear()
                         },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFF2D6498),
@@ -214,7 +213,7 @@ fun SecoundScreen(navController: NavHostController) {
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
 
-                    lisTask.forEachIndexed { index, task ->
+                    addTask.forEachIndexed { index, task ->
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
@@ -223,7 +222,7 @@ fun SecoundScreen(navController: NavHostController) {
                             Checkbox(
                                 checked = task.Checkedlist && task.isDone,
                                 onCheckedChange = { isChecked ->
-                                    lisTask[index] = task.copy(
+                                    addTask[index] = task.copy(
                                         Checkedlist = isChecked,
                                         isDone = isChecked
                                     )
@@ -236,27 +235,26 @@ fun SecoundScreen(navController: NavHostController) {
                             )
                             Box(
                                 modifier = Modifier
-                                    .fillMaxWidth(0.3f)
+                                    .weight(1f)
                                     .height(60.dp)
-                                    .width(60.dp)
                                     .background(Color(0xFFF2D6498))
                             ) {
-                                Box(
-                                    modifier = Modifier
-                                        .background(Color(0xFFFC0C2C9))
-                                ) {
-                                    Text(
-                                        text = task.Listname,
-                                        textAlign = TextAlign.Center,
-                                        textDecoration =
-                                            if (task.isDone)
-                                                TextDecoration.LineThrough
-                                            else
-                                                TextDecoration.None,
-                                        color = Color.White,
-                                        fontSize = 30.sp,
-                                    )
-                                }
+                            Box(
+                                modifier = Modifier
+                                    .background(Color(0xFFFC0C2C9)),
+                            ) {
+                                Text(
+                                    text = task.Listname,
+                                    textAlign = TextAlign.Center,
+                                    textDecoration =
+                                        if (task.isDone)
+                                            TextDecoration.LineThrough
+                                        else
+                                            TextDecoration.None,
+                                    color = Color.White,
+                                    fontSize = 30.sp,
+                                )
+                            }
                             }
 
                             Spacer(
@@ -265,16 +263,17 @@ fun SecoundScreen(navController: NavHostController) {
 
                             IconButton(
                                 onClick = {
-                                    lisTask.removeAt(index)
+                                    addTask.removeAt(index)
                                 }
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Delete,
                                     contentDescription = "Excluir tarefa",
-                                    tint = Color.Red
+                                    tint = Color.Red,
+                                    modifier = Modifier
+                                        .size(24.dp)
                                 )
                             }
-
                         }
                     }
                 }
