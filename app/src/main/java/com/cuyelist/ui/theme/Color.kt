@@ -1,4 +1,4 @@
-package com.example.checked_list.ui.theme
+package com.cuyelist.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
