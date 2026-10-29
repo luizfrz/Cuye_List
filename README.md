@@ -2,6 +2,21 @@
 
 **Cuye List** é um aplicativo Android para anotar, priorizar e acompanhar seus recados (notas e tarefas), feito com Jetpack Compose.
 
+<p>
+  <img alt="Kotlin" src="https://img.shields.io/badge/Kotlin-2.2.10-7F52FF?logo=kotlin&logoColor=white" />
+  <img alt="Android" src="https://img.shields.io/badge/Android-minSdk%2024-3DDC84?logo=android&logoColor=white" />
+  <img alt="Jetpack Compose" src="https://img.shields.io/badge/Jetpack%20Compose-UI-4285F4?logo=jetpackcompose&logoColor=white" />
+  <img alt="Material 3" src="https://img.shields.io/badge/Material%203-Design-757575?logo=materialdesign&logoColor=white" />
+  <img alt="Gradle" src="https://img.shields.io/badge/Gradle-Kotlin%20DSL-02303A?logo=gradle&logoColor=white" />
+  <img alt="Android Studio" src="https://img.shields.io/badge/Android%20Studio-IDE-3DDC84?logo=androidstudio&logoColor=white" />
+  <img alt="JUnit" src="https://img.shields.io/badge/JUnit-4-25A162?logo=junit5&logoColor=white" />
+</p>
+
+- **Kotlin** + **Jetpack Compose** com **Material 3** para a interface.
+- **Navigation Compose** para a navegação e **ViewModel** para o estado das telas.
+- **SharedPreferences + JSON** para a persistência local.
+- **Gradle (Kotlin DSL)** com catálogo de versões e **JUnit** para os testes unitários.
+
 ## Recursos
 
 - Criar recados com **título**, **detalhes** opcionais e **prioridade** (baixa, média, alta).
