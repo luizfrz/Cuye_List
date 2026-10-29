@@ -1,4 +1,7 @@
 # Cuye List
+<div align="center">
+<img width="200" height="200" alt="cuyes" src="https://github.com/user-attachments/assets/f5065b7b-153a-4ec6-80f5-fe8683457e39" />
+</div>
 
 **Cuye List** é um aplicativo Android para anotar, priorizar e acompanhar seus recados (notas e tarefas), feito com Jetpack Compose.
 
