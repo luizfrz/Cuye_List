@@ -9,12 +9,12 @@
         android:icon="@drawable/cuyes"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Checked_List">
+        android:theme="@style/Theme.CuyeList">
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Checked_List">
+            android:theme="@style/Theme.CuyeList">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

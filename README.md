@@ -1,61 +1,64 @@
 # Cuye List
 
-Aplicativo Android para criar e marcar tarefas usando Jetpack Compose.
+**Cuye List** é um aplicativo Android para anotar, priorizar e acompanhar seus recados (notas e tarefas), feito com Jetpack Compose.
+
+## Recursos
+
+- Criar recados com **título**, **detalhes** opcionais e **prioridade** (baixa, média, alta).
+- Marcar como concluído, **editar** e **excluir** (com opção de **desfazer**).
+- **Busca** por título e detalhes, e filtros **Todos / Pendentes / Concluídos**.
+- Ordenação automática: pendentes primeiro, depois prioridade e mais recentes.
+- **Barra de progresso** com o total de recados concluídos.
+- **Limpar concluídos** de uma só vez (também com desfazer).
+- Visual novo: cabeçalho com gradiente e progresso, cards com faixa de prioridade, folha inferior para criar/editar e **deslizar para excluir**.
+- **Compartilhar** um recado com outros apps.
+- **Persistência local**: os recados continuam salvos ao fechar o app.
 
 ## Arquitetura
 
-O projeto usa uma arquitetura simples orientada por responsabilidade:
-
-<!-- A separação mantém a navegação, os dados e a interface independentes, facilitando a manutenção e a evolução do app. -->
+O projeto usa uma arquitetura simples orientada por responsabilidade (UI → ViewModel → repositório):
 
 ```text
-app/src/main/
-├── AndroidManifest.xml
-├── java/com/cuyelist/
-│   ├── MainActivity.kt
-│   ├── model/ 
-│   │   └── Task.kt
-│   ├── navigation/ ➞ navegação 
-│   │   └── AppNavigation.kt
-│   └── ui/
-│       ├── screens/ ➞ telas 
-│       │   ├── home/ ➞ principal 
-│       │   │   └── HomeScreen.kt
-│       │   └── task/ ➞ criar uma nova task 
-│       │       └── NewTaskScreen.kt
-│       └── theme/
-│           ├── Color.kt
-│           ├── Theme.kt
-│           └── Type.kt
-└── res/
-    ├── drawable/
-    ├── mipmap-*/
-    ├── values/
-    └── xml/
+app/src/main/java/com/cuyelist/
+├── MainActivity.kt
+├── data/
+│   └── RecadoRepository.kt        ➞ persistência (SharedPreferences + JSON)
+├── model/
+│   └── Recado.kt                  ➞ Recado, Priority, RecadoFilter e regras de busca/ordenação
+├── navigation/
+│   └── AppNavigation.kt           ➞ rotas e navegação
+└── ui/
+    ├── screens/
+    │   ├── home/HomeScreen.kt     ➞ tela inicial (mascote, resumo e atalho para os recados)
+    │   └── recado/
+    │       ├── RecadoScreen.kt    ➞ tela da lista: busca, filtros, swipe para excluir e desfazer
+    │       ├── RecadoComponents.kt➞ cabeçalho com progresso, cards, estado vazio e folha de criar/editar
+    │       └── RecadoViewModel.kt ➞ estado da tela e escrita no repositório
+    └── theme/                     ➞ cores, tipografia e tema Material 3
 ```
 
 ### Responsabilidades
 
 - `MainActivity`: ponto de entrada Android. Inicializa o tema e chama a navegação.
 - `navigation`: define as rotas e conecta as telas, mantendo a navegação fora da UI.
-- `model`: contém os modelos de dados usados pelo aplicativo.
-- `ui/screens`: contém as telas Compose organizadas por fluxo da aplicação.
+- `model`: modelos de dados e regras puras (filtro, busca e ordenação), cobertas por testes unitários.
+- `data`: salva e carrega os recados localmente.
+- `ui/screens`: telas Compose organizadas por fluxo; o estado vive no `ViewModel`.
 - `ui/theme`: concentra cores, tipografia e configuração do tema Material 3.
-- `res`: reúne recursos Android, como imagens, textos, temas e regras de backup.
 
 ## Fluxo da aplicação
 
 ```mermaid
 flowchart TD
-    A[MainActivity] --> B[Checked_ListTheme]
+    A[MainActivity] --> B[CuyeListTheme]
     B --> C[AppNavigation]
     C --> D[HomeScreen]
-    D -->|Criar lista de tarefas| E[NewTaskScreen]
+    D -->|Meus recados| E[RecadoScreen]
     E -->|Voltar| D
-    E --> F[Task]
+    E --> F[RecadoViewModel]
+    F --> G[RecadoRepository]
+    F --> H[Recado]
 ```
-
-A tela `NewTaskScreen` mantém a lista em memória enquanto está aberta. O modelo `Task` representa cada item e possui apenas os dados necessários para a interface: nome e estado concluído.
 
 ## Convenções
 
@@ -64,7 +67,7 @@ A tela `NewTaskScreen` mantém a lista em memória enquanto está aberta. O mode
 - Cada tela recebe callbacks de navegação, evitando que a UI conheça detalhes do `NavController`.
 - Rotas ficam centralizadas em `navigation/AppNavigation.kt`.
 - Novas telas devem ser adicionadas em `ui/screens/<fluxo>/`.
-- Modelos compartilhados devem ficar em `model/`.
+- Modelos e regras puras ficam em `model/`; acesso a armazenamento em `data/`.
 
 ## Como executar
 
@@ -78,4 +81,11 @@ Para validar apenas a compilação Kotlin:
 
 ```bash
 ./gradlew :app:compileDebugKotlin
+```
+
+
+Para rodar os testes unitários:
+
+```bash
+./gradlew :app:testDebugUnitTest
 ```

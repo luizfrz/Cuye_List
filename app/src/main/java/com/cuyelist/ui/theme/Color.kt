@@ -2,10 +2,11 @@ package com.cuyelist.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val RecadoBlue = Color(0xFF3978F6)
+val RecadoNavy = Color(0xFF2D6498)
+val RecadoSurface = Color(0xFFF4F7FF)
+val RecadoInk = Color(0xFF1B2433)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val PriorityLow = Color(0xFF3FA66B)
+val PriorityMedium = Color(0xFFE0A100)
+val PriorityHigh = Color(0xFFD64545)
